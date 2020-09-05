@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<style>
+    table{
+        float: left;
+    }
+</style>
+<table border="1">
+<tr>
+    <th>
+        uuid
+    </th>
+    <th>
+        co2濃度[ppm]
+    </th>
+</tr>
+{% for d in uuidco2 %}
+<tr>
+    <td>{{d.uuid}}</td>
+    <td>{{d.co2}}</td>
+</tr>
+{% endfor %}
+</table>
+
+<table border="1">
+    <tr>
+        <th>
+            uuid
+        </th>
+        <th>
+            LINE_ID
+        </th>
+    </tr>
+    {% for d in uuid_line %}
+    <tr>
+        <td>{{d.uuid}}</td>
+        <td>{{d.line_id}}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<table border="1">
+    <tr>
+        <th>
+            uuid
+        </th>
+        <th>
+            mail address
+        </th>
+    </tr>
+    {% for d in uuid_mail %}
+    <tr>
+        <td>{{d.uuid}}</td>
+        <td>{{d.mail_address}}</td>
+    </tr>
+    {% endfor %}
+</table>
