@@ -30,10 +30,13 @@ class UUID_MAIL(Model):
 
     uuid = Column(Integer, primary_key=True)
     mail_address = Column(Text, nullable=True)
+import os
 
 
+## DB のURIは環境変数から取得
+URI=os.getenv("DB_URI")
 engine = create_engine(
-    'postgres://hdxaljhijkzfqc:40aea3e7f619976a099d61487105246280c54bfa151cc46ea6063df9b9624c7d@ec2-54-224-124-241.compute-1.amazonaws.com:5432/d48dv0ip8dhksg',)
+    )
 Model.metadata.create_all(engine)
 
 
