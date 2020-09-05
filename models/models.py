@@ -35,8 +35,8 @@ import os
 
 ## DB のURIは環境変数から取得
 URI=os.getenv("DB_URI")
-engine = create_engine(
-    )
+
+engine = create_engine(URI)
 Model.metadata.create_all(engine)
 
 
@@ -58,28 +58,28 @@ if __name__ == "__main__":
     s = create_sesson()
     result = s.query(UUID_CO2).all()
     print("chk")
+    # if 1:
+    #     id_line, id_mail, id_co2 = [], [], []
+    #     for _ in range(500):
+
+    #         uuid = _
+    #         mail_addr = randomname(random.randint(4, 6))+"@gmail.com"
+    #         co2 = random.randint(0, 5000)
+    #         line_id = randomname(30)
+
+    #         id_line.append(UUID_LINE_ID(uuid=uuid, line_id=line_id))
+
+    #         id_mail.append(UUID_MAIL(uuid=uuid, mail_address=mail_addr))
+
+    #         id_co2.append(UUID_CO2(uuid=uuid, co2=co2))
+    #     print("chk2.0")
+    #     s.add_all(id_line)
+    #     s.add_all(id_mail)
+    #     s.add_all(id_co2)
+    #     print("chk2")
+    #     s.commit()
+
     if 1:
-        id_line, id_mail, id_co2 = [], [], []
-        for _ in range(500):
-
-            uuid = _
-            mail_addr = randomname(random.randint(4, 6))+"@gmail.com"
-            co2 = random.randint(0, 5000)
-            line_id = randomname(30)
-
-            id_line.append(UUID_LINE_ID(uuid=uuid, line_id=line_id))
-
-            id_mail.append(UUID_MAIL(uuid=uuid, mail_address=mail_addr))
-
-            id_co2.append(UUID_CO2(uuid=uuid, co2=co2))
-        print("chk2.0")
-        s.add_all(id_line)
-        s.add_all(id_mail)
-        s.add_all(id_co2)
-        print("chk2")
-        s.commit()
-
-    else:
         for r in result:
             print(r.uuid, r.co2, r.last_up_time)
     s.close()
