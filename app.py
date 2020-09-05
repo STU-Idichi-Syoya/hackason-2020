@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 
 @app.route("/show-db-count")
-def root():
+def db_show():
     s=models.create_sesson()
    
     result=s.query(models.UUID_CO2).all()
@@ -26,7 +26,11 @@ def root():
 
     return render_template("idx.html",uuidco2=result,uuid_mail=result3,uuid_line=result2)
 
-   
+
+@app.route("/")
+def root():
+
+    return "<h1>GOOOOOOOD</h1>"
 
 
 
