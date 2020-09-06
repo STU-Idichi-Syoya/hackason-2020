@@ -31,7 +31,8 @@ YOUR_CHANNEL_ACCESS_TOKEN=os.getenv("YOUR_CHANNEL_ACCESS_TOKEN")
 line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 
-import database,mail
+import database
+# import mail
 @app.route('/co2', methods=['POST'])
 def co2():
     message = request.get_json()
@@ -43,7 +44,8 @@ def co2():
     if message["value"] > 1000:
         mail_list=database.get_mail_addr(uuid)
         for adr in mail_list:
-            mail.send_alert(to=adr)
+            # mail.send_alert(to=adr)
+            pass
         
         line_ids=database.get_Line_id(uuid)
         for id in line_ids:
