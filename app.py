@@ -16,7 +16,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,ImageSendMessage
+    MessageEvent, TextMessage, TextSendMessage,ImageSendMessage,FollowEvent
 )
 import os
 
@@ -31,6 +31,25 @@ YOUR_CHANNEL_ACCESS_TOKEN=os.getenv("YOUR_CHANNEL_ACCESS_TOKEN")
 line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 
+import database,mail
+@app.route('/co2', methods=['POST'])
+def co2():
+    message = request.get_json()
+    co2=message["value"]
+    uuid=message["id"]
+    database.update_co2(uuid,co2)
+    
+
+    if message["value"] > 1000:
+        mail_list=database.get_mail_addr(uuid)
+        for adr in mail_list:
+            mail.send_alert(to=adr)
+        
+        line_ids=database.get_Line_id(uuid)
+        for id in line_ids:
+            line_bot_api.push_message(
+                id,TextMessage(text="CO2が充満しております。至急換気をお願いします。")
+            )
 
 
 @app.route("/show-db")
@@ -95,6 +114,25 @@ def handle_message(event):
         user_id,
         ImageSendMessage(original_content_url=URI,preview_image_url=URI
         ))
+
+
+@handler.add(FollowEvent)
+def first_add_line(event):
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text='このアカウントはCO2通知BOTです。\n下のメニューから追加するをタッチしてください。\n')
+    )
+
+
+
+def add_line_id_uuid(event):
+    user_id=event.source.user_id
+    
+    line_bot_api.reply_message(
+        TextMessage(text="工場出荷番号（UUID）を入力してください")
+    )
+
+
 
 if __name__ == '__main__':
     
