@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 
 
-@app.route("/show-db-count")
+@app.route("/show-db")
 def db_show():
     s=models.create_sesson()
    
