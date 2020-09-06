@@ -57,6 +57,9 @@ if __name__ == "__main__":
 
     s = create_sesson()
     result = s.query(UUID_CO2).all()
+
+
+    
     print("chk")
 
     # if 1:
