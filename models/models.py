@@ -35,9 +35,9 @@ import os
 
 ## DB のURIは環境変数から取得
 URI=os.getenv("DB_URI")
-
-engine = create_engine(URI)
-Model.metadata.create_all(engine)
+if URI is not None:
+    engine = create_engine(URI)
+    Model.metadata.create_all(engine)
 
 
 def create_sesson():
@@ -59,7 +59,7 @@ if __name__ == "__main__":
     result = s.query(UUID_CO2).all()
 
 
-    
+
     print("chk")
 
     # if 1:

@@ -1,12 +1,35 @@
-from flask import Flask,render_template
+from sys import path
+from flask import Flask,render_template,abort
 import sys,os
 
-
+from flask import request
 
 sys.path.extend(["models","scripts"])
 import models
 
 app = Flask(__name__)
+
+from linebot import (
+    LineBotApi, WebhookHandler
+)
+from linebot.exceptions import (
+    InvalidSignatureError
+)
+from linebot.models import (
+    MessageEvent, TextMessage, TextSendMessage,ImageSendMessage
+)
+import os
+
+
+# YOUR_CHANNEL_ACCESS_TOKEN = os.environ["YOUR_CHANNEL_ACCESS_TOKEN"]
+YOUR_CHANNEL_SECRET=os.getenv("YOUR_CHANNEL_SECRET")
+
+# YOUR_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
+
+YOUR_CHANNEL_ACCESS_TOKEN=os.getenv("YOUR_CHANNEL_ACCESS_TOKEN")
+
+line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
+handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 
 
 
@@ -32,10 +55,46 @@ def root():
 
     return "<h1>GOOOOOOOD</h1>"
 
+@app.errorhandler(404)
+def page_not_found(error):
+    ipaddr=request.environ["REMOTE_ADDR"]
+    # print(ipaddr)
+    return render_template('page_not_found.html',ip=ipaddr), 404
 
 
 
 
+
+@app.route("/line-callback", methods=['POST'])
+def line_call_back():
+    signature = request.headers['X-Line-Signature']
+
+    # get request body as text
+    body = request.get_data(as_text=True)
+    app.logger.info("Request body: " + body)
+
+    # handle webhook body
+    try:
+        handler.handle(body, signature)
+    except InvalidSignatureError:
+        abort(400)
+    return "OK"
+
+import integral as I
+import random
+@handler.add(MessageEvent, message=TextMessage)
+def handle_message(event):
+    URI=I.rand_img()
+    user_id=event.source.user_id
+    
+    line_bot_api.push_message(
+        user_id,
+        TextSendMessage(text="次の問題を解け"))
+
+    line_bot_api.push_message(
+        user_id,
+        ImageSendMessage(original_content_url=URI,preview_image_url=URI
+        ))
 
 if __name__ == '__main__':
     
