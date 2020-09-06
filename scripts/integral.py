@@ -1,12 +1,3 @@
-from sympy import im
-
-
-id=0
-id= "1BOtomkkayaW1bQiBcSlw2oXiYwKSS1zI"
-id2="1KrsU0TyBDJFT4kpFLW-q7as_nTxVgcEW"
-
-
-
 
 
 I2="https://8f15f039d438.ngrok.io"+f"/static/i3.jpg"
