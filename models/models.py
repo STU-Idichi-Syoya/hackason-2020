@@ -35,7 +35,7 @@ import os
 
 ## DB のURIは環境変数から取得
 URI=os.getenv("DB_URI")
-if URI is None: URI="postgres://hdxaljhijkzfqc:40aea3e7f619976a099d61487105246280c54bfa151cc46ea6063df9b9624c7d@ec2-54-224-124-241.compute-1.amazonaws.com:5432/d48dv0ip8dhksg"
+
 engine = create_engine(URI)
 Model.metadata.create_all(engine)
 
@@ -58,6 +58,7 @@ if __name__ == "__main__":
     s = create_sesson()
     result = s.query(UUID_CO2).all()
     print("chk")
+
     # if 1:
     #     id_line, id_mail, id_co2 = [], [], []
     #     for _ in range(500):
