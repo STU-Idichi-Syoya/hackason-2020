@@ -27,7 +27,6 @@ def send_mail(to_email,from_email,account,password,msg): #メッセージ送信
 account = "turing.test50@gmail.com" #アカウント名
 password = "turing53" #パスワード
 
-to_email = "carlos.paniagua042137@gmail.com" #TO
 from_email = "turing.test50@gmail.com" #FROM
 
 charset = 'ISO-2022-JP' #文字コード
