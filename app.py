@@ -31,6 +31,10 @@ YOUR_CHANNEL_ACCESS_TOKEN=os.getenv("YOUR_CHANNEL_ACCESS_TOKEN")
 line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 
+
+
+
+
 import database
 # import mail
 @app.route('/co2', methods=['POST'])
@@ -118,11 +122,12 @@ def handle_message(event):
         ))
 
 
+
 @handler.add(FollowEvent)
 def first_add_line(event):
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text='このアカウントはCO2通知BOTです。\n下のメニューから追加するをタッチしてください。\n')
+        TextSendMessage(text='このアカウントはCO2通知BOTです。\nUUIDを入力してください\n')
     )
 
 

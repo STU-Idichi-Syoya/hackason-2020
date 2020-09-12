@@ -4,32 +4,51 @@ from datetime import datetime
 from sqlalchemy import create_engine, Column, Integer, String, DateTime, Text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import relationship
 
 Model = declarative_base()
 
-
-class UUID_CO2(Model):
-
+class ID_UUID(Model):
+    
     __tablename__ = 'uuid_co2'
 
+    id=Column(Text,)
     uuid = Column(Integer, primary_key=True)
     co2 = Column(Integer, nullable=False, default=0)
     last_up_time = Column(DateTime, default=datetime.now,
                           onupdate=datetime.now)
 
+# class UUID_CO2(Model):
 
-class UUID_LINE_ID(Model):
-    __tablename__ = "uuid_lineID"
+#     __tablename__ = 'uuid_co2'
 
-    uuid = Column(Integer, primary_key=True)
-    line_id = Column(Text, nullable=True)
+#     uuid = Column(Integer, primary_key=True)
+#     co2 = Column(Integer, nullable=False, default=0)
+#     last_up_time = Column(DateTime, default=datetime.now,
+#                           onupdate=datetime.now)
 
 
-class UUID_MAIL(Model):
-    __tablename__ = "uuid_mail"
+# class UUID_LOCATION(Model):
+    
+#     __tablename__ = 'uuid_location'
 
-    uuid = Column(Integer, primary_key=True)
-    mail_address = Column(Text, nullable=True)
+#     uuid = Column(Integer, primary_key=True)
+#     co2 = Column(Text, nullable=False, default=0)
+#     last_up_time = Column(DateTime, default=datetime.now,
+#                           onupdate=datetime.now)
+
+# class UUID_LINE_ID(Model):
+#     __tablename__ = "uuid_lineID"
+
+#     uuid = Column(Integer, primary_key=True)
+#     line_id = Column(Text, nullable=True)
+
+
+# class UUID_MAIL(Model):
+#     __tablename__ = "uuid_mail"
+
+#     uuid = Column(Integer, primary_key=True)
+#     mail_address = Column(Text, nullable=True)
 import os
 
 
