@@ -3,6 +3,7 @@ from flask import Flask,render_template,abort
 import sys,os
 
 from flask import request
+from requests.packages.urllib3 import HTTPResponse
 
 sys.path.extend(["models","scripts"])
 import models
@@ -56,7 +57,7 @@ def co2():
             line_bot_api.push_message(
                 id,TextMessage(text="CO2が充満しております。至急換気をお願いします。")
             )
-
+    return HTTPResponse(201)
 
 @app.route("/show-db")
 def db_show():
