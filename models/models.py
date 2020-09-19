@@ -1,54 +1,57 @@
 from datetime import datetime
 
 
-from sqlalchemy import create_engine, Column, Integer, String, DateTime, Text
+from sqlalchemy import create_engine, Column, Integer, String, DateTime, Text,Float,DateTime
+from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import relationship
+from sqlalchemy.sql.schema import ForeignKey
 
 Model = declarative_base()
 
-class ID_UUID(Model):
+class Place(Model):
     
-    __tablename__ = 'uuid_co2'
+    __tablename__ = 'Place'
 
-    id=Column(Text,)
-    uuid = Column(Integer, primary_key=True)
-    co2 = Column(Integer, nullable=False, default=0)
+    ## id== uuid
+    id=Column(Text,primary_key=True)
+    lat=Column(Float)
+    lng=Column(Float)
+    name=Column(Text)
+    average = Column(Integer, nullable=False, default=0)
     last_up_time = Column(DateTime, default=datetime.now,
                           onupdate=datetime.now)
 
-# class UUID_CO2(Model):
-
-#     __tablename__ = 'uuid_co2'
-
-#     uuid = Column(Integer, primary_key=True)
-#     co2 = Column(Integer, nullable=False, default=0)
-#     last_up_time = Column(DateTime, default=datetime.now,
-#                           onupdate=datetime.now)
-
-
-# class UUID_LOCATION(Model):
+class Line(Model):
     
-#     __tablename__ = 'uuid_location'
+    __tablename__ = 'Line'
 
-#     uuid = Column(Integer, primary_key=True)
-#     co2 = Column(Text, nullable=False, default=0)
-#     last_up_time = Column(DateTime, default=datetime.now,
-#                           onupdate=datetime.now)
+    ## id== uuid
+    id=Column(Integer,primary_key=True,autoincrement=True)
+    place=Column(Text,ForeignKey("Place.id"),primary_key=True)
+    LineID = Column(Text)
 
-# class UUID_LINE_ID(Model):
-#     __tablename__ = "uuid_lineID"
+class Mail(Model):
+    
+    __tablename__ = 'Mail'
 
-#     uuid = Column(Integer, primary_key=True)
-#     line_id = Column(Text, nullable=True)
+    ## id== uuid
+    id=Column(Integer,primary_key=True,autoincrement=True)
+    place=Column(Text,ForeignKey("Place.id"),primary_key=True)
+    Mail_addr = Column(Text)
+import datetime
+class Record(Model):
+    
+    __tablename__ = 'Record'
+
+    ## id== uuid
+    id=Column(Integer,primary_key=True,autoincrement=True)
+    place=Column(Text,ForeignKey("Place.id"),primary_key=True)
+    created_at=Column(DateTime,default=datetime.datetime.now)
+    co2 = Column(Integer)
 
 
-# class UUID_MAIL(Model):
-#     __tablename__ = "uuid_mail"
-
-#     uuid = Column(Integer, primary_key=True)
-#     mail_address = Column(Text, nullable=True)
 import os
 
 
@@ -75,34 +78,46 @@ if __name__ == "__main__":
         return ''.join(randlst)
 
     s = create_sesson()
-    result = s.query(UUID_CO2).all()
+    result = s.query(Place).all()
 
 
 
     print("chk")
 
+    if len(result)==0:
+        place_db,Line_db,Mail_db = [], [], []
+        for _ in range(500):
+
+            uuid = randomname(50)
+            mail_addr = randomname(random.randint(4, 6))+"@gmail.com"
+            ave = random.randint(500,2000)
+            line_id = randomname(30)
+            name=randomname(10)
+            lat=random.randrange(130,145)
+            lng=random.randrange(35,45)
+
+
+            place_db.append(Place(id=uuid,name=name,lat=lat,lng=lng))
+            Line_db.append(Line(place=uuid,LineID=line_id))
+            Mail_db.append(Mail(place=uuid,Mail_addr=mail_addr))
+
+            # id_line.append(UUID_LINE_ID(uuid=uuid, line_id=line_id))
+
+            # id_mail.append(UUID_MAIL(uuid=uuid, mail_address=mail_addr))
+
+            # id_co2.append(UUID_CO2(uuid=uuid, co2=co2))
+
+        
+        print("chk2.0")
+        s.add_all(place_db)
+        s.commit()
+
+        s.add_all(Line_db)
+        s.add_all(Mail_db)
+        print("chk2")
+        s.commit()
+
     # if 1:
-    #     id_line, id_mail, id_co2 = [], [], []
-    #     for _ in range(500):
-
-    #         uuid = _
-    #         mail_addr = randomname(random.randint(4, 6))+"@gmail.com"
-    #         co2 = random.randint(0, 5000)
-    #         line_id = randomname(30)
-
-    #         id_line.append(UUID_LINE_ID(uuid=uuid, line_id=line_id))
-
-    #         id_mail.append(UUID_MAIL(uuid=uuid, mail_address=mail_addr))
-
-    #         id_co2.append(UUID_CO2(uuid=uuid, co2=co2))
-    #     print("chk2.0")
-    #     s.add_all(id_line)
-    #     s.add_all(id_mail)
-    #     s.add_all(id_co2)
-    #     print("chk2")
-    #     s.commit()
-
-    if 1:
-        for r in result:
-            print(r.uuid, r.co2, r.last_up_time)
+    #     for r in result:
+    #         print(r.uuid, r.co2, r.last_up_time)
     s.close()

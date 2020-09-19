@@ -9,14 +9,27 @@
     <th>
         uuid
     </th>
-    <th>
-        co2濃度[ppm]
+   <th>
+        緯度
+    </th><th>
+        経度
     </th>
+    <th>
+        名前[ppm]
+    </th>
+    <th>
+        co2平均濃度[ppm]
+    </th>
+    
 </tr>
-{% for d in uuidco2 %}
+{% for d in Place %}
 <tr>
-    <td>{{d.uuid}}</td>
-    <td>{{d.co2}}</td>
+    <td>{{d.id}}</td>
+    <td>{{d.lat}}</td>
+    <td>{{d.lng}}</td>
+    <td>{{d.name}}</td>
+    <td>{{d.average}}</td>
+
 </tr>
 {% endfor %}
 </table>
@@ -32,8 +45,8 @@
     </tr>
     {% for d in uuid_line %}
     <tr>
-        <td>{{d.uuid}}</td>
-        <td>{{d.line_id}}</td>
+        <td>{{d.place}}</td>
+        <td>{{d.LineID}}</td>
     </tr>
     {% endfor %}
 </table>
@@ -49,8 +62,8 @@
     </tr>
     {% for d in uuid_mail %}
     <tr>
-        <td>{{d.uuid}}</td>
-        <td>{{d.mail_address}}</td>
+        <td>{{d.place}}</td>
+        <td>{{d.Mail_addr}}</td>
     </tr>
     {% endfor %}
 </table>

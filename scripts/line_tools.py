@@ -92,3 +92,7 @@ def create_menu(channel_access_token):
     rm.add_area(0, 843, 1250, 843, "postback", "data1=from_richmenu&data2=as_postback")
     rm.add_area(1250, 843, 1250, 843, "postback", ["data3=from_richmenu_with&data4=message_text", "ポストバックのメッセージ"])    
     
+
+
+def get_user_id(event):
+    return event.source.user_id

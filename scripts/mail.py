@@ -30,15 +30,18 @@ password = "turing53" #パスワード
 from_email = "turing.test50@gmail.com" #FROM
 
 charset = 'ISO-2022-JP' #文字コード
-subject = "【危険】CO2ついて"  # 件名
+subject = "【危険】CO2について"  # 件名
 message = "CO2が充満しております。至急換気をお願いします。"  # メール本文
 
-msg = create_message(to_email, from_email, message, subject, charset)
+# msg = create_message(to_email, from_email, message, subject, charset)
 
-send_mail(to_email, from_email, account, password, msg)
+# send_mail(to_email, from_email, account, password, msg)
 
-def send_alert(to,from=from_email,msg=message,account=account,subject=subject):
+def send_alert(to,from_email=from_email,msg=message,account=account,subject=subject):
     
-    msg = create_message(to_email, from_email, message, subject, charset)
-    send_mail(to_email, from_email, account, password, msg)
+    msg = create_message(to, from_email, message, subject, charset)
+    send_mail(to, from_email, account, password, msg)
 
+if __name__ == "__main__":
+    
+    send_alert("e1q19006@oit.ac.jp")
