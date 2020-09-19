@@ -56,7 +56,10 @@ def get_react_map():
     
     return {"places":aa}
 
-print(get_react_map())
+    
+if __name__ == "__main__":
+    
+    print(get_react_map())
 
 
     

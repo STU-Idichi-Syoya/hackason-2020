@@ -24,13 +24,13 @@ import os
 
 
 # YOUR_CHANNEL_ACCESS_TOKEN = os.environ["YOUR_CHANNEL_ACCESS_TOKEN"]
-YOUR_CHANNEL_SECRET=os.getenv("YOUR_CHANNEL_ACCESS_TOKEN")
+YOUR_CHANNEL_SECRET=os.getenv("YOUR_CHANNEL_ACCESS_TOKEN","kj")
 
 
 
 # YOUR_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
 
-YOUR_CHANNEL_ACCESS_TOKEN=os.getenv("YOUR_CHANNEL_SECRET")
+YOUR_CHANNEL_ACCESS_TOKEN=os.getenv("YOUR_CHANNEL_SECRET","ok")
 
 
 line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
@@ -106,9 +106,12 @@ def root():
 
 @app.errorhandler(404)
 def page_not_found(error):
-    ipaddr=request.environ["REMOTE_ADDR"]
+    if request.headers.getlist("X-Forwarded-For"):
+       ip = request.headers.getlist("X-Forwarded-For")[0]
+    else:
+       ip = request.remote_addr
     # print(ipaddr)
-    return render_template('page_not_found.html',ip=ipaddr), 404
+    return render_template('page_not_found.html',ip=ip), 404
 
 
 
@@ -196,3 +199,4 @@ if __name__ == '__main__':
     app.run(
         host="0.0.0.0", port=int(os.environ.get("PORT", 5000))
     )
+    print(1)
