@@ -69,55 +69,66 @@ def create_sesson():
 
 
 if __name__ == "__main__":
-    import random
-    import string
+    ses=create_sesson()
+    q=ses.query(Record).order_by(Record.created_at.desc()).all()
+    
+    s=0
+    c=0
+    for count, qq in enumerate(q):
+        if count >=10:
+            break
+        c+=1
+        s+=qq.co2
+    print(s/c,c)
+    # import random
+    # import string
 
-    def randomname(n):
-        randlst = [random.choice(string.ascii_letters + string.digits)
-                   for i in range(n)]
-        return ''.join(randlst)
+    # def randomname(n):
+    #     randlst = [random.choice(string.ascii_letters + string.digits)
+    #                for i in range(n)]
+    #     return ''.join(randlst)
 
-    s = create_sesson()
-    result = s.query(Place).all()
-
-
-
-    print("chk")
-
-    if len(result)==0:
-        place_db,Line_db,Mail_db = [], [], []
-        for _ in range(500):
-
-            uuid = randomname(50)
-            mail_addr = randomname(random.randint(4, 6))+"@gmail.com"
-            ave = random.randint(500,2000)
-            line_id = randomname(30)
-            name=randomname(10)
-            lat=random.randrange(130,145)
-            lng=random.randrange(35,45)
+    # s = create_sesson()
+    # result = s.query(Place).all()
 
 
-            place_db.append(Place(id=uuid,name=name,lat=lat,lng=lng))
-            Line_db.append(Line(place=uuid,LineID=line_id))
-            Mail_db.append(Mail(place=uuid,Mail_addr=mail_addr))
 
-            # id_line.append(UUID_LINE_ID(uuid=uuid, line_id=line_id))
+    # print("chk")
 
-            # id_mail.append(UUID_MAIL(uuid=uuid, mail_address=mail_addr))
+    # if len(result)==0:
+    #     place_db,Line_db,Mail_db = [], [], []
+    #     for _ in range(500):
 
-            # id_co2.append(UUID_CO2(uuid=uuid, co2=co2))
+    #         uuid = randomname(50)
+    #         mail_addr = randomname(random.randint(4, 6))+"@gmail.com"
+    #         ave = random.randint(500,2000)
+    #         line_id = randomname(30)
+    #         name=randomname(10)
+    #         lat=random.randrange(130,145)
+    #         lng=random.randrange(35,45)
+
+
+    #         place_db.append(Place(id=uuid,name=name,lat=lat,lng=lng))
+    #         Line_db.append(Line(place=uuid,LineID=line_id))
+    #         Mail_db.append(Mail(place=uuid,Mail_addr=mail_addr))
+
+    #         # id_line.append(UUID_LINE_ID(uuid=uuid, line_id=line_id))
+
+    #         # id_mail.append(UUID_MAIL(uuid=uuid, mail_address=mail_addr))
+
+    #         # id_co2.append(UUID_CO2(uuid=uuid, co2=co2))
 
         
-        print("chk2.0")
-        s.add_all(place_db)
-        s.commit()
+    #     print("chk2.0")
+    #     s.add_all(place_db)
+    #     s.commit()
 
-        s.add_all(Line_db)
-        s.add_all(Mail_db)
-        print("chk2")
-        s.commit()
+    #     s.add_all(Line_db)
+    #     s.add_all(Mail_db)
+    #     print("chk2")
+    #     s.commit()
 
-    # if 1:
-    #     for r in result:
-    #         print(r.uuid, r.co2, r.last_up_time)
-    s.close()
+    # # if 1:
+    # #     for r in result:
+    # #         print(r.uuid, r.co2, r.last_up_time)
+    # s.close()

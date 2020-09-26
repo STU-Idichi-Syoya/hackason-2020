@@ -2,6 +2,7 @@
 from sqlalchemy.sql.functions import mode
 from models import models
 
+from sqlalchemy import distinct
 
 
 
@@ -10,6 +11,22 @@ def update_co2(uuid,co2):
     q=[models.Record(place=uuid,co2=co2)]
     ses.add_all(q)
     ses.commit()
+    q=ses.query(models.Record).filter(models.Record.place==uuid).order_by(models.Record.created_at.desc()).all()
+    
+    s=0
+    c=0
+    for count, qq in enumerate(q):
+        if count >=5:
+            break
+        c+=1
+        s+=qq.co2
+    
+    ave=s/c
+    q=ses.query(models.Place).filter(models.Place.id==uuid).first()
+    q.average=ave
+
+    ses.commit()
+
 
 
 def add_line(uuid,line_id):
@@ -34,7 +51,7 @@ def get_mail_addr(uuid):
    for d in q:
        mail_list.append(d.Mail_addr)
     
-   return mail_list
+   return list(set(mail_list))
 
 def get_Line_id(uuid):
    ses=models.create_sesson()
@@ -43,7 +60,7 @@ def get_Line_id(uuid):
    for d in q:
        line_ids.append(d.LineID)
     
-   return line_ids
+   return list(set(line_ids))
 
 def get_react_map():
     ses=models.create_sesson()
@@ -58,8 +75,18 @@ def get_react_map():
 
     
 if __name__ == "__main__":
+    print("start")
+    ses=models.create_sesson()
+    q=ses.query(models.Record).order_by(models.Record.created_at.desc()).all()
     
-    print(get_react_map())
+    s=0
+    c=0
+    for count, qq in enumerate(q):
+        if count >=10:
+            break
+        c+=1
+        s+=qq.co2
+    print(s/c,c)
 
 
     
