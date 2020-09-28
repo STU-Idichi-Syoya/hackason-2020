@@ -35,7 +35,7 @@ YOUR_CHANNEL_ACCESS_TOKEN=os.getenv("YOUR_CHANNEL_SECRET","ok")
 
 
 line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
-handler = WebhookHandler(YOUR_CHANNEL_SECRET)
+handler = WebhookHandler(YOUR_CHANNEL_SECRET )
 
 
 
