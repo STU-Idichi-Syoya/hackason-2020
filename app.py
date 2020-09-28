@@ -222,6 +222,8 @@ def add_line_id_uuid(event):
     )
 
 
+import flask_cors
+flask_cors.CORS(app)
 
 if __name__ == '__main__':
     
