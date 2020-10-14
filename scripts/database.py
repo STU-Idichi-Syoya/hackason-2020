@@ -1,4 +1,5 @@
 
+from models.models import Place
 from sqlalchemy.sql.functions import mode
 from models import models
 
@@ -26,6 +27,20 @@ def update_co2(uuid,co2):
     q.average=ave
 
     ses.commit()
+
+def get_co2(uuid):
+    ses=models.create_sesson()
+
+    q=ses.query(models.Record).filter(models.Record.place==uuid).order_by(models.Record.created_at.desc()).first()
+    
+    
+    if q is None:
+        return q.co2
+    else:
+        return None
+    
+
+    
 
 
 

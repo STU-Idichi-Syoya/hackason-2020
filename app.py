@@ -119,6 +119,22 @@ def page_not_found(error):
     return render_template('page_not_found.html',ip=ip), 404
 
 
+from flask import Flask, render_template #追加
+
+import random
+@app.route('/openapi/<uuid>')
+def hello(uuid):
+    ppm=database.get_co2()
+    
+    s=""
+    if ppm is None:
+        s="[DEMO]"
+        ppm=random.randint(200,1500)
+    # print(uuid)
+    if ppm<1000:
+        return render_template("chk.html",ppm=s+str(ppm))
+    else:
+        return render_template("tri.html",ppm=s+str(ppm))
 
 
 
