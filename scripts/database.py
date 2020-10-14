@@ -34,7 +34,7 @@ def get_co2(uuid):
     q=ses.query(models.Record).filter(models.Record.place==uuid).order_by(models.Record.created_at.desc()).first()
     
     
-    if q is None:
+    if q is not None:
         return q.co2
     else:
         return None
