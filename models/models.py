@@ -56,7 +56,8 @@ import os
 
 
 ## DB のURIは環境変数から取得
-URI=os.getenv("DB_URI")
+# URI=os.getenv("DB_URI")
+URI="postgres://hdxaljhijkzfqc:40aea3e7f619976a099d61487105246280c54bfa151cc46ea6063df9b9624c7d@ec2-54-224-124-241.compute-1.amazonaws.com:5432/d48dv0ip8dhksg"
 if URI is not None:
     engine = create_engine(URI)
     Model.metadata.create_all(engine)
@@ -70,16 +71,34 @@ def create_sesson():
 
 if __name__ == "__main__":
     ses=create_sesson()
-    q=ses.query(Record).order_by(Record.created_at.desc()).all()
+    q=ses.query(Place).all()
     
     s=0
     c=0
-    for count, qq in enumerate(q):
-        if count >=10:
-            break
-        c+=1
-        s+=qq.co2
-    print(s/c,c)
+    '''
+    lat=Column(Float)
+    lng=Column(Float)
+    '''
+    import pickle
+    with open("d.pkl","rb") as f:
+        s=pickle.load(f)
+        i=0
+        for qq,ans in zip(q,s):
+            if(ans[1]=="nan" or ans[2]=="nan"):
+                continue
+            lat,lon=float(ans[1]),float(ans[2])
+            qq.lat=lat
+            qq.lng=lon
+            name=ans[0].replace("\u3000"," ")
+            qq.name=name
+            i+=1
+            # qq.last_up_time=
+        for qq in q[i::]:
+            qq.lat=0
+            qq.lng=0
+            qq.name="NONETYPE"
+        ses.commit()
+        # print(s/c,c)
     # import random
     # import string
 
