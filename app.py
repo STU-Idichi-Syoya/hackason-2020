@@ -124,7 +124,7 @@ from flask import Flask, render_template #追加
 import random
 @app.route('/openapi/<uuid>')
 def hello(uuid):
-    ppm=database.get_co2()
+    ppm=database.get_co2(uuid)
     
     s=""
     if ppm is None:
