@@ -131,15 +131,14 @@ import random
 def hello(uuid):
     ppm=database.get_co2(uuid)
     
-    s=""
+    # s=""
     if ppm is None:
-        s="[DEMO]"
         ppm=random.randint(200,1500)
     # print(uuid)
     if ppm<1000:
-        return render_template("chk.html",ppm=s+str(ppm))
+        return render_template("chk.html",ppm=str(ppm))
     else:
-        return render_template("tri.html",ppm=s+str(ppm))
+        return render_template("tri.html",ppm=str(ppm))
 
 
 
