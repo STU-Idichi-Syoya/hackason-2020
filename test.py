@@ -2,7 +2,7 @@ from flask import Flask, render_template #追加
 
 app = Flask(__name__)
 import random
-@app.route('/')
+@app.route('/<uuid>')
 def hello(uuid):
     ppm=random.randint(100,2000)
     ppm=635

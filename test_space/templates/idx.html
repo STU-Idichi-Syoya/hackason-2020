@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<style>
+    table{
+        float: left;
+    }
+</style>
+<table border="1">
+<tr>
+    <th>
+        uuid
+    </th>
+   <th>
+        緯度
+    </th><th>
+        経度
+    </th>
+    <th>
+        名前[ppm]
+    </th>
+    <th>
+        co2平均濃度[ppm]
+    </th>
+    
+</tr>
+{% for d in Place %}
+<tr>
+    <td>{{d.id}}</td>
+    <td>{{d.lat}}</td>
+    <td>{{d.lng}}</td>
+    <td>{{d.name}}</td>
+    <td>{{d.average}}</td>
+
+</tr>
+{% endfor %}
+</table>
+
+<table border="1">
+    <tr>
+        <th>
+            uuid
+        </th>
+        <th>
+            LINE_ID
+        </th>
+    </tr>
+    {% for d in uuid_line %}
+    <tr>
+        <td>{{d.place}}</td>
+        <td>{{d.LineID}}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<table border="1">
+    <tr>
+        <th>
+            uuid
+        </th>
+        <th>
+            mail address
+        </th>
+    </tr>
+    {% for d in uuid_mail %}
+    <tr>
+        <td>{{d.place}}</td>
+        <td>{{d.Mail_addr}}</td>
+    </tr>
+    {% endfor %}
+</table>

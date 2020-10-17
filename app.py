@@ -104,10 +104,15 @@ def query_react():
 
 
 
-@app.route("/")
+@app.route('/')
 def root():
+    return render_template("食堂店舗のご案内｜食堂｜関西大学生活協同組合.html")
 
-    return "<h1>GOOOOOOOD</h1>"
+@app.route('/demo/k')
+def root2():
+    return render_template("食堂店舗のご案内｜食堂｜関西大学生活協同組合.html")
+
+
 
 @app.errorhandler(404)
 def page_not_found(error):
